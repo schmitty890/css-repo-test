@@ -3,15 +3,7 @@ const runSequence = require("run-sequence");
 const clean = require("gulp-clean");
 const concat = require("gulp-concat");
 const less = require("gulp-less");
-const gutil = require("gulp-util");
-
-// start gulp task by cleaning then running serve
-gulp.task("default", function (done) {
-  runSequence("clean", ["less"], function () {
-    // console.log('Run something else');
-    done(); // This is what lets gulp know this task is complete!
-  });
-});
+// const gutil = require("gulp-util");
 
 // clean the build folder - delete all the files so they can be rebuilt
 gulp.task("clean", function () {
@@ -29,15 +21,17 @@ gulp.task("less", function () {
   return gulp.src("src/styles.less").pipe(less()).pipe(gulp.dest("build/css"));
 });
 
-// concat js files in the js folder and build them to the build/js folder
-// gulp.task("concatScripts", function () {
-//   console.log("gulp concatScripts task");
-//   return gulp
-//     .src(["js/*.js"])
-//     .pipe(concat("app.js"))
-//     .pipe(gulp.dest("build/js"))
-//     .on("error", function (err) {
-//       gutil.log(gutil.colors.red("[Error]"), err.toString());
-//     })
-//     .pipe(gulp.dest("build/js"));
+gulp.task(
+  "default",
+  gulp.series("clean", "less", function (done) {
+    done();
+  })
+);
+
+// start gulp task by cleaning then running serve
+// gulp.task("default", function (done) {
+//   runSequence("clean", ["less"], function () {
+//     // console.log('Run something else');
+//     done(); // This is what lets gulp know this task is complete!
+//   });
 // });
