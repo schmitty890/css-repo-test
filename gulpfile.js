@@ -18,20 +18,14 @@ gulp.task("clean", function () {
 
 // take the styles in less/styles.less file and convert them to .css and push them to the build/css folder
 gulp.task("less", function () {
+  console.log("gulp less task");
   return gulp.src("src/styles.less").pipe(less()).pipe(gulp.dest("build/css"));
 });
 
 gulp.task(
   "default",
-  gulp.series("clean", "less", function (done) {
+  gulp.series("clean", "less", function seriesRun(done) {
+    console.log("series run for clean and less are complete");
     done();
   })
 );
-
-// start gulp task by cleaning then running serve
-// gulp.task("default", function (done) {
-//   runSequence("clean", ["less"], function () {
-//     // console.log('Run something else');
-//     done(); // This is what lets gulp know this task is complete!
-//   });
-// });
